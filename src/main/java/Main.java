@@ -2,6 +2,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -9,9 +11,32 @@ public class Main {
     public static void main(String[] args) {
         String site = "https://auto.drom.ru/";
         try {
-            parse(site);
+//            parse(site);
+            parseFile();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    static void parseFile() throws IOException {
+        File input = new File("C:\\Users\\Kovalev\\Desktop\\MySite-master\\index.html");
+        Document doc = Jsoup.parse(input, "windows-1251", "http://example.com/");
+        System.out.println(doc.title());
+        Elements carItems = doc.select(".head_white_content h3, .head_black_content h4");
+        for (Element car_item: carItems) {
+            System.out.println(car_item.text());
+        }
+        carItems = doc.select(".numeral h5");
+        for (Element car_item: carItems) {
+            System.out.println(car_item.text());
+        }
+        carItems = doc.select(".advantage p");
+        for (Element car_item: carItems) {
+            System.out.println(car_item.text());
+        }
+        carItems = doc.select("#filters li");
+        for (Element car_item: carItems) {
+            System.out.println(car_item.text());
         }
     }
 
